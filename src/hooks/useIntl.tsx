@@ -5,9 +5,11 @@ import {
 } from '../context/LocalizationContext';
 
 const useIntl = (): Partial<ILocalization> => {
-  const {lang, locale, setLocale} = React.useContext(
-    LocalizationContext,
-  ) as ILocalization;
+  const {
+    lang = () => '',
+    locale,
+    setLocale,
+  } = React.useContext(LocalizationContext) as ILocalization;
 
   return {lang, locale, setLocale};
 };

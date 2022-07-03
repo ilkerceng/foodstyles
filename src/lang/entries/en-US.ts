@@ -1,4 +1,4 @@
-import messages from '../../en_US';
+import messages from '../locales/en_US';
 
 const EnLang = {
   messages,

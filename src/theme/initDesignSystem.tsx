@@ -1,10 +1,5 @@
-import {
-  Colors,
-  Typography,
-  Spacings,
-  ThemeManager,
-  SwitchProps,
-} from 'react-native-ui-lib';
+import {TextStyle} from 'react-native';
+import {Colors, Typography, Spacings} from 'react-native-ui-lib';
 
 export const colors = {
   GREYISH_BROWN_30: 'rgba(111, 93, 80, 0.3)',
@@ -27,9 +22,16 @@ export const colors = {
   GREEN_TEAL: '#11b777',
 };
 
-Colors.loadColors(colors);
+export type TypographyType =
+  | 'TEXT_STYLE'
+  | 'TEXT_STYLE_2'
+  | 'TEXT_STYLE_3'
+  | 'TEXT_STYLE_4'
+  | 'TEXT_STYLE_5'
+  | 'TEXT_STYLE_6'
+  | 'TEXT_STYLE_7';
 
-Typography.loadTypographies({
+export const typographies: Record<TypographyType, TextStyle> = {
   TEXT_STYLE: {
     fontFamily: 'ProximaNovaAlt-Semibold',
     fontSize: 16,
@@ -83,10 +85,14 @@ Typography.loadTypographies({
     letterSpacing: 0,
     color: colors.GREYISH_BROWN,
   },
-});
+};
 
-Spacings.loadSpacings({
+export const spacings: Record<string, number> = {
   s1: 4,
   s2: 8,
   s3: 12,
-});
+};
+
+Colors.loadColors(colors);
+Typography.loadTypographies(typographies);
+Spacings.loadSpacings(spacings);

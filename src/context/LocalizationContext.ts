@@ -1,7 +1,7 @@
 import React from 'react';
 import {LangType, TranslationType} from '../types';
 
-export const LocalizationContext = React.createContext({});
+export const LocalizationContext = React.createContext<ILocalization>({});
 
 export interface ILocalization {
   lang: (id: keyof LangType) => string;
