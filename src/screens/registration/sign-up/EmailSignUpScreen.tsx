@@ -43,7 +43,7 @@ const EmailSignUpScreen = ({route}: {route: Route<any>}) => {
   });
   const onSubmit = (data: EmailSignUpType) => {
     console.log(data);
-    if (data.name === 'asd') {
+    if (data.name === 'server-error') {
       setError('loginError', {
         message: 'Email or password is not correct',
         type: 'value',
