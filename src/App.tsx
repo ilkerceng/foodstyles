@@ -2,10 +2,10 @@ import 'react-native-gesture-handler';
 import './bootstrap';
 
 import React from 'react';
-import RNCreatedScreen from './screens/RNCreatedScreen';
+import ThemeScreen from './theme/ThemeScreen';
 
 const App = () => {
-  return <RNCreatedScreen />;
+  return <ThemeScreen />;
 };
 
 export default App;
