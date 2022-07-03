@@ -1,0 +1,2 @@
+- Tasks
+  - create module resolver to not use relative paths
