@@ -4,8 +4,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {defaultScreenStackOptions} from './config';
 import LoginScreen from '../screens/registration/LoginScreen';
 import {Routes} from './routesNames';
-import TextInputExample from '../components/Form/TextInputExample';
 import EmailSignUpScreen from '../screens/registration/sign-up/EmailSignUpScreen';
+import EmailSignInScreen from '../screens/registration/sign-in/email/EmailSignInScreen';
 
 const AuthStack = createStackNavigator();
 const RegistrationStack = createStackNavigator();
@@ -13,25 +13,24 @@ const RegistrationStack = createStackNavigator();
 function RegistrationNavigator() {
   return (
     <RegistrationStack.Navigator
-      initialRouteName={Routes.LOGIN}
-      // initialRouteName={'TextInputExample'}
+      initialRouteName={Routes.Login}
       screenOptions={{
         ...defaultScreenStackOptions,
       }}
     >
-      <RegistrationStack.Screen component={LoginScreen} name={Routes.LOGIN} />
+      <RegistrationStack.Screen component={LoginScreen} name={Routes.Login} />
       <RegistrationStack.Screen
-        component={TextInputExample}
-        name={'TextInputExample'}
+        component={EmailSignInScreen}
+        name={'EmailSignIn'}
+        options={{
+          title: Routes.EmailSignIn,
+        }}
       />
       <RegistrationStack.Screen
         component={EmailSignUpScreen}
         name={'EmailSignUp'}
         options={{
-          title: 'Sign up with Email',
-          // headerShown: true,
-          // headerTransparent: true,
-          // title: 'Sign up with Email',
+          title: Routes.EmailSignUp,
         }}
       />
     </RegistrationStack.Navigator>
@@ -41,12 +40,12 @@ function RegistrationNavigator() {
 function AuthNavigator() {
   return (
     <AuthStack.Navigator
-      initialRouteName={Routes.REGISTRATION_NAVIGATOR}
+      initialRouteName={Routes.Registration}
       screenOptions={{...defaultScreenStackOptions}}
     >
       <AuthStack.Screen
         component={RegistrationNavigator}
-        name={Routes.REGISTRATION_NAVIGATOR}
+        name={Routes.Registration}
       />
     </AuthStack.Navigator>
   );

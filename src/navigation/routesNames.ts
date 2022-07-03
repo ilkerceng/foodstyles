@@ -1,5 +1,6 @@
 export const Routes = {
-  REGISTRATION_NAVIGATOR: 'Registration',
-  LOGIN: 'Login',
+  Registration: 'Registration',
+  Login: 'Login',
   EmailSignUp: 'Sign up with Email',
+  EmailSignIn: 'Log in',
 };

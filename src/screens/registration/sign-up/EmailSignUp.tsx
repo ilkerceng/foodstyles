@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 const EmailSignUp = () => {
   const {lang} = useIntl();
   const navigation = useNavigation();
+
   return (
     <LoginButton
       label={lang('emailSignupButtonTitle')}
