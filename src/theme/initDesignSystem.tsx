@@ -90,30 +90,3 @@ Spacings.loadSpacings({
   s2: 8,
   s3: 12,
 });
-
-ThemeManager.setComponentTheme(
-  'Switch',
-  (props: SwitchProps): Partial<SwitchProps> => {
-    return {
-      // this will apply a different backgroundColor
-      // depending on whether the Button has an outline or not
-      thumbColor: Colors.white,
-      onColor: Colors.green,
-      offColor: Colors.gray,
-      width: 50,
-      height: 30,
-      thumbSize: 28,
-      thumbStyle: {
-        shadowColor: Colors.black,
-        shadowOffset: {
-          width: 0,
-          height: 1,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 1.41,
-
-        elevation: 2,
-      },
-    };
-  },
-);
