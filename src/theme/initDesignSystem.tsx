@@ -7,7 +7,7 @@ export const colors = {
   GREYISH_BROWN_30_20: 'rgba(111, 93, 80, 0.2)',
   GREYISH_BROWN: '#434343',
   BACKGROUND_GRAY: '#434343',
-  AQUA_GREEN: '#434343',
+  AQUA_GREEN: 'rgb(17, 206, 144)',
   TOMATO: '#434343',
   WHITE_TWO: '#434343',
   WHITE_80: 'rgba(242, 242, 242, 0.8)',

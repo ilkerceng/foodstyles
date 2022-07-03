@@ -8,7 +8,6 @@ import AppNavigationContainer from './navigation/AppNavigationContainer';
 import {LocalizationContext} from './context/LocalizationContext';
 import {TranslationType} from './types';
 import i18n, {Scope, TranslateOptions} from 'i18n-js';
-import {colors} from './theme/initDesignSystem';
 
 const App = () => {
   const [locale, setLocale] = React.useState<TranslationType>();

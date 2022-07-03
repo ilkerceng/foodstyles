@@ -3,27 +3,26 @@ import React from 'react';
 import useIntl from '../../hooks/useIntl';
 import {Image, Text, View} from 'react-native-ui-lib';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import AppleSignIn from './AppleSignIn';
-import GoogleSignIn from './GoogleSignIn';
-import LoginButtonView from './LoginButtonView';
-import EmailSignUp from './EmailSignUp';
-import FacebookSignIn from './FacebookSignIn';
+import AppleSignInButton from './sign-in/apple/AppleSignInButton';
+import GoogleSignInButton from './sign-in/google/GoogleSignInButton';
+import Spacer from './Spacer';
+import EmailSignUp from './sign-up/EmailSignUp';
+import FacebookSignInButton from './sign-in/facebook/FacebookSignInButton';
 import LinearGradient from 'react-native-linear-gradient';
 import {colors} from '../../theme/initDesignSystem';
-
 import Logo3x from '../../assets/images/logo3x.png';
-import EmailSignIn from './EmailSignIn';
+import EmailSignInButton from './sign-in/email/EmailSignInButton';
 import PrivacyPolicy from '../privacy-policy/PrivacyPolicy';
 
 const LoginScreen = () => {
   const {lang} = useIntl();
 
   return (
-    <SafeAreaView edges={[]} style={{flex: 1, ...styles.container}}>
-      <LinearGradient
-        colors={[colors.MAIZE, colors.ORANGISH]}
-        style={styles.linearGradient}
-      >
+    <LinearGradient
+      colors={[colors.MAIZE, colors.ORANGISH]}
+      style={styles.linearGradient}
+    >
+      <SafeAreaView edges={[]} style={{...styles.container}}>
         <View flex centerH marginT-100 marginB-22>
           <View flex centerH>
             <Image style={{width: 100, height: 100}} source={Logo3x} />
@@ -47,22 +46,22 @@ const LoginScreen = () => {
             >
               {lang('signInMessage')}
             </Text>
-            <LoginButtonView>
+            <Spacer space={15}>
               {Platform.OS === 'ios' ? (
-                <AppleSignIn label={lang('appleSigninButtonTitle')} />
+                <AppleSignInButton label={lang('appleSigninButtonTitle')} />
               ) : null}
-              <FacebookSignIn label={lang('facebookSigninButtonTitle')} />
-              <GoogleSignIn label={lang('googleSigninButtonTitle')} />
+              <FacebookSignInButton label={lang('facebookSigninButtonTitle')} />
+              <GoogleSignInButton label={lang('googleSigninButtonTitle')} />
               <EmailSignUp />
-              <EmailSignIn label="Log in with Email" />
-            </LoginButtonView>
+              <EmailSignInButton label="Log in with Email" />
+            </Spacer>
           </View>
           <View>
             <PrivacyPolicy />
           </View>
         </View>
-      </LinearGradient>
-    </SafeAreaView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
 
@@ -71,7 +70,6 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    alignItems: 'center',
   },
   linearGradient: {
     flex: 1,
