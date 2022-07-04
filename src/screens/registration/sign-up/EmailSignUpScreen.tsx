@@ -13,7 +13,7 @@ import {Controller, useForm} from 'react-hook-form';
 import {FloatingHeader} from '../../../navigation/NavigationComponents';
 import {Route} from '@react-navigation/native';
 import {Routes} from '../../../navigation/routesNames';
-import {useSignUpWithEmail} from '../../../services/useAuthentication';
+import {useSignUpWithEmail} from '../../../services/authentication.service';
 import {useUserStore} from '../../../store/userStore';
 import {DEFAULT_REQUIRED_MESSAGE} from '../../../config/constants';
 

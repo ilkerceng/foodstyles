@@ -8,7 +8,7 @@ type IConfigOptions = {
   env: APP_ENV;
 };
 
-const API_BASE_PATH = '/api';
+const API_BASE_PATH = '/graphql';
 const PORT = 3000;
 let localIP;
 if (networkInterfaces().en0) {

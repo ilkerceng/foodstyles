@@ -4,4 +4,5 @@ export const Routes = {
   EmailSignUp: 'Sign up with Email',
   EmailSignIn: 'Log in',
   Profile: 'Profile',
+  CardListScreen: 'Card List',
 };

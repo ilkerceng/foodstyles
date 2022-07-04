@@ -7,8 +7,9 @@ import {Routes} from './routesNames';
 import EmailSignUpScreen from '../screens/registration/sign-up/EmailSignUpScreen';
 import EmailSignInScreen from '../screens/registration/sign-in/email/EmailSignInScreen';
 import {useUserStore} from '../store/userStore';
-import RNCreatedScreen from '../screens/RNCreatedScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
+import CardScreen from '../screens/card-list/CardScreen';
+import {setContext} from '@apollo/client/link/context';
 
 const AuthStack = createStackNavigator();
 const RegistrationStack = createStackNavigator();
@@ -43,10 +44,10 @@ function RegistrationNavigator() {
 function AuthNavigator() {
   return (
     <AuthStack.Navigator
-      initialRouteName={Routes.Profile}
+      initialRouteName={Routes.CardListScreen}
       screenOptions={{...defaultScreenStackOptions}}
     >
-      <AuthStack.Screen component={RNCreatedScreen} name={'gql'} />
+      <AuthStack.Screen component={CardScreen} name={'gql'} />
       <AuthStack.Screen
         component={ProfileScreen}
         name={Routes.Profile}
@@ -63,6 +64,23 @@ function AuthNavigator() {
 
 function AppStack() {
   const {user} = useUserStore();
+
+  React.useEffect(() => {
+    if (user?.accessToken) {
+      setContext((_, {headers}) => {
+        return {
+          headers: {
+            ...headers,
+            authorization: user?.accessToken
+              ? `Bearer ${user?.accessToken}`
+              : '',
+          },
+        };
+      });
+    }
+    return () => {};
+  }, [user]);
+
   return user?.accessToken ? <AuthNavigator /> : <RegistrationNavigator />;
 }
 

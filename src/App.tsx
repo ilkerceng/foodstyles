@@ -8,12 +8,7 @@ import AppNavigationContainer from './navigation/AppNavigationContainer';
 import {LocalizationContext} from './context/LocalizationContext';
 import {TranslationType} from './types';
 import i18n, {Scope, TranslateOptions} from 'i18n-js';
-import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
-
-const client = new ApolloClient({
-  uri: 'https://api-dev.foodstyles.com/graphql',
-  cache: new InMemoryCache(),
-});
+import Apollo from './Apollo';
 
 const App = () => {
   const [locale, setLocale] = React.useState<TranslationType>();
@@ -29,7 +24,7 @@ const App = () => {
   );
 
   return (
-    <ApolloProvider client={client}>
+    <Apollo>
       <LocalizationContext.Provider value={localizationContext}>
         <SafeAreaProvider>
           <StatusBar
@@ -42,7 +37,7 @@ const App = () => {
           <AppNavigationContainer />
         </SafeAreaProvider>
       </LocalizationContext.Provider>
-    </ApolloProvider>
+    </Apollo>
   );
 };
 
