@@ -6,6 +6,9 @@ import LoginScreen from '../screens/registration/LoginScreen';
 import {Routes} from './routesNames';
 import EmailSignUpScreen from '../screens/registration/sign-up/EmailSignUpScreen';
 import EmailSignInScreen from '../screens/registration/sign-in/email/EmailSignInScreen';
+import {useUserStore} from '../store/userStore';
+import RNCreatedScreen from '../screens/RNCreatedScreen';
+import ProfileScreen from '../screens/profile/ProfileScreen';
 
 const AuthStack = createStackNavigator();
 const RegistrationStack = createStackNavigator();
@@ -13,7 +16,7 @@ const RegistrationStack = createStackNavigator();
 function RegistrationNavigator() {
   return (
     <RegistrationStack.Navigator
-      initialRouteName={Routes.Login}
+      initialRouteName={Routes.EmailSignIn}
       screenOptions={{
         ...defaultScreenStackOptions,
       }}
@@ -40,21 +43,33 @@ function RegistrationNavigator() {
 function AuthNavigator() {
   return (
     <AuthStack.Navigator
-      initialRouteName={Routes.Registration}
+      initialRouteName={Routes.Profile}
       screenOptions={{...defaultScreenStackOptions}}
     >
+      <AuthStack.Screen component={RNCreatedScreen} name={'gql'} />
       <AuthStack.Screen
-        component={RegistrationNavigator}
-        name={Routes.Registration}
+        component={ProfileScreen}
+        name={Routes.Profile}
+        options={{
+          title: Routes.Profile,
+          headerBackTitleVisible: true,
+          headerBackTitle: 'Test',
+          headerShown: false,
+        }}
       />
     </AuthStack.Navigator>
   );
 }
 
+function AppStack() {
+  const {user} = useUserStore();
+  return user?.accessToken ? <AuthNavigator /> : <RegistrationNavigator />;
+}
+
 const AppNavigationContainer = () => {
   return (
     <NavigationContainer>
-      <AuthNavigator />
+      <AppStack />
     </NavigationContainer>
   );
 };

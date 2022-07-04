@@ -5,7 +5,7 @@ import {Image, Text, View} from 'react-native-ui-lib';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import AppleSignInButton from './sign-in/apple/AppleSignInButton';
 import GoogleSignInButton from './sign-in/google/GoogleSignInButton';
-import Spacer from './Spacer';
+import Spacer from '../../components/Spacer';
 import EmailSignUp from './sign-up/EmailSignUp';
 import FacebookSignInButton from './sign-in/facebook/FacebookSignInButton';
 import LinearGradient from 'react-native-linear-gradient';

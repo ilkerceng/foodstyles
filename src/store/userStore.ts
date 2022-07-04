@@ -2,12 +2,19 @@ import create from 'zustand';
 
 export type ILoginType = 'apple' | 'facebook' | 'google' | 'email';
 
-export interface IUser {
-  id: string;
-  name: string;
-  loginType: ILoginType;
-  email?: string;
-}
+export type IUser = {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    appleId: string | null;
+    facebookId: string | null;
+    googleId: string | null;
+    loginType: ILoginType;
+  };
+  accessToken: string;
+  refreshToken: string;
+};
 
 type State = {
   user: IUser | undefined;

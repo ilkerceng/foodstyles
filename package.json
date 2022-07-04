@@ -20,12 +20,14 @@
     "ios-prod": "npm run prod && react-native run-ios"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.9",
     "@react-native-community/datetimepicker": "^6.2.0",
     "@react-native-community/netinfo": "^9.3.0",
     "@react-native-picker/picker": "^2.4.2",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/stack": "^6.2.1",
     "axios": "^0.27.2",
+    "graphql": "^16.5.0",
     "i18n-js": "^3.9.2",
     "react": "18.0.0",
     "react-hook-form": "^7.33.1",
@@ -67,7 +69,8 @@
     "typescript": "^4.4.4"
   },
   "resolutions": {
-    "@types/react": "^18"
+    "@types/react": "^18",
+    "react-devtools-core": "4.14.0"
   },
   "jest": {
     "preset": "react-native",

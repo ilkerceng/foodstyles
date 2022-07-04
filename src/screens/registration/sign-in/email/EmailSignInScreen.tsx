@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {colors, typographies} from '../../../../theme/initDesignSystem';
 import TextInput, {
   ErrorMessage,
@@ -7,23 +7,20 @@ import TextInput, {
 } from '../../../../components/Form/TextInput';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-import Spacer from '../../Spacer';
+import Spacer from '../../../../components/Spacer';
 import {Button, View} from 'react-native-ui-lib';
 import {Controller, useForm} from 'react-hook-form';
-import {
-  CustomHeader,
-  HeaderBackButton,
-  HeaderTitle,
-} from '../../../../navigation/NavigationComponents';
+import {FloatingHeader} from '../../../../navigation/NavigationComponents';
 import {Route} from '@react-navigation/native';
 import {Routes} from '../../../../navigation/routesNames';
+import {useLoginWithEmail} from '../../../../services/useAuthentication';
+import {useUserStore} from '../../../../store/userStore';
+import {DEFAULT_REQUIRED_MESSAGE} from '../../../../config/constants';
 
-type EmailSignUpType = {
+export type EmailSignUpProps = {
   email: string;
   password: string;
 };
-
-const DEFAULT_REQUIRED_MESSAGE = 'Required';
 
 const EmailSignInScreen = ({route}: {route: Route<any>}) => {
   const {
@@ -34,17 +31,29 @@ const EmailSignInScreen = ({route}: {route: Route<any>}) => {
     formState: {errors},
   } = useForm({
     defaultValues: {
-      email: '',
-      password: '',
+      email: 'john@doe.com',
+      password: 'p4SSW0rd',
       loginError: '',
     },
   });
-  const onSubmit = (data: EmailSignUpType) => {
-    if (data.email === 'asd') {
-      setError('loginError', {
-        message: 'Email or password is not correct',
-      });
-    }
+  const [loginWithEmail, {data, loading, error}] = useLoginWithEmail();
+  const {setUser} = useUserStore();
+  const [showForgotPasswordLink, setShowForgotPasswordLink] = useState(false);
+
+  const onSubmit = ({email, password}: EmailSignUpProps) => {
+    loginWithEmail({
+      variables: {email, password},
+      onError: () => {
+        setError('loginError', {
+          message: error?.message || '',
+        });
+        setShowForgotPasswordLink(true);
+        //
+      },
+      onCompleted(data) {
+        setUser(data.loginWithEmail);
+      },
+    });
   };
 
   return (
@@ -53,12 +62,7 @@ const EmailSignInScreen = ({route}: {route: Route<any>}) => {
       style={styles.linearGradient}
     >
       <SafeAreaView edges={['top']} style={{...styles.container}}>
-        <CustomHeader>
-          <View style={{position: 'absolute', left: 0}}>
-            <HeaderBackButton />
-          </View>
-          <HeaderTitle>{Routes[route.name]}</HeaderTitle>
-        </CustomHeader>
+        <FloatingHeader title={Routes[route.name]} />
         <View style={styles.contentContainer}>
           <Spacer space={13}>
             <Controller
@@ -120,10 +124,24 @@ const EmailSignInScreen = ({route}: {route: Route<any>}) => {
                   fontSize: 16,
                   letterSpacing: 1,
                 }}
-                style={{width: 150, height: 43}}
+                style={{width: 152, height: 43}}
                 onPress={handleSubmit(onSubmit)}
               />
             </View>
+            {showForgotPasswordLink ? (
+              <View center>
+                <Button
+                  label="Forgot my password"
+                  backgroundColor={colors.AQUA_GREEN}
+                  labelStyle={{
+                    ...typographies.TEXT_STYLE,
+                    fontSize: 16,
+                  }}
+                  link
+                  onPress={() => false}
+                />
+              </View>
+            ) : null}
           </Spacer>
         </View>
       </SafeAreaView>

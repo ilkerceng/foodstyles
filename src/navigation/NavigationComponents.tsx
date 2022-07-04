@@ -1,37 +1,17 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  View,
+  ViewStyle,
+} from 'react-native';
 import React, {FC, PropsWithChildren} from 'react';
 import {colors, spacings, typographies} from '../theme/initDesignSystem';
 import {BackIcon} from '../assets/icons';
 import {TouchableOpacity} from 'react-native-ui-lib';
 import {useNavigation} from '@react-navigation/native';
 
-export const CustomHeader: FC<PropsWithChildren<{}>> = props => {
-  return (
-    <View
-      style={{
-        flexDirection: 'row',
-        height: 41,
-        marginHorizontal: spacings.s2,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      {props.children}
-    </View>
-  );
-};
-
-export const HeaderTitle: FC<PropsWithChildren<{}>> = props => {
-  return (
-    <Text
-      style={{
-        ...typographies.TEXT_STYLE_5,
-      }}
-    >
-      {props.children}
-    </Text>
-  );
-};
 export const HeaderBackButton: FC<PropsWithChildren> = props => {
   const navigation = useNavigation();
 
@@ -56,6 +36,45 @@ export const HeaderBackButton: FC<PropsWithChildren> = props => {
       <TouchableOpacity onPress={navigation.goBack}>
         <BackIcon width={20} height={20} fill={colors.BLACK} />
       </TouchableOpacity>
+    </View>
+  );
+};
+
+export const FloatingHeader = ({
+  headerContainerStyle = {},
+  title,
+  titleStyle,
+  showBackButton = true,
+}: {
+  headerContainerStyle?: StyleProp<ViewStyle>;
+  title: string;
+  titleStyle?: StyleProp<TextStyle>;
+  showBackButton?: boolean;
+}) => {
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        height: 41,
+        marginHorizontal: spacings.s2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        ...headerContainerStyle,
+      }}
+    >
+      {showBackButton ? (
+        <View style={{position: 'absolute', left: 0}}>
+          <HeaderBackButton />
+        </View>
+      ) : null}
+      <Text
+        style={{
+          ...typographies.TEXT_STYLE_5,
+          ...titleStyle,
+        }}
+      >
+        {title}{' '}
+      </Text>
     </View>
   );
 };

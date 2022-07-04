@@ -7,24 +7,21 @@ import TextInput, {
 } from '../../../components/Form/TextInput';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-import Spacer from '../Spacer';
-import {Button, Text, View} from 'react-native-ui-lib';
+import Spacer from '../../../components/Spacer';
+import {Button, View} from 'react-native-ui-lib';
 import {Controller, useForm} from 'react-hook-form';
-import {
-  CustomHeader,
-  HeaderBackButton,
-  HeaderTitle,
-} from '../../../navigation/NavigationComponents';
-import {Route, useNavigation} from '@react-navigation/native';
+import {FloatingHeader} from '../../../navigation/NavigationComponents';
+import {Route} from '@react-navigation/native';
 import {Routes} from '../../../navigation/routesNames';
+import {useSignUpWithEmail} from '../../../services/useAuthentication';
+import {useUserStore} from '../../../store/userStore';
+import {DEFAULT_REQUIRED_MESSAGE} from '../../../config/constants';
 
 type EmailSignUpType = {
   name: string;
   email: string;
   password: string;
 };
-
-const DEFAULT_REQUIRED_MESSAGE = 'Required';
 
 const EmailSignUpScreen = ({route}: {route: Route<any>}) => {
   const {
@@ -41,14 +38,21 @@ const EmailSignUpScreen = ({route}: {route: Route<any>}) => {
       loginError: '',
     },
   });
-  const onSubmit = (data: EmailSignUpType) => {
-    console.log(data);
-    if (data.name === 'server-error') {
-      setError('loginError', {
-        message: 'Email or password is not correct',
-        type: 'value',
-      });
-    }
+  const [signUpWithEmail] = useSignUpWithEmail();
+  const {setUser} = useUserStore();
+
+  const onSubmit = ({name, email, password}: EmailSignUpType) => {
+    signUpWithEmail({
+      variables: {name, email, password},
+      onError(err) {
+        setError('loginError', {
+          message: err?.message || '',
+        });
+      },
+      onCompleted(data) {
+        setUser(data.signUpWithEmail);
+      },
+    });
   };
 
   return (
@@ -57,15 +61,11 @@ const EmailSignUpScreen = ({route}: {route: Route<any>}) => {
       style={styles.linearGradient}
     >
       <SafeAreaView edges={['top']} style={{...styles.container}}>
-        <CustomHeader>
-          <View style={{position: 'absolute', left: 0}}>
-            <HeaderBackButton />
-          </View>
-          <HeaderTitle>{Routes['EmailSignUp']}</HeaderTitle>
-        </CustomHeader>
+        <FloatingHeader title={Routes[route.name]} />
         <View style={styles.contentContainer}>
           <Spacer space={13}>
             <Controller
+              name="name"
               control={control}
               rules={{
                 required: {
@@ -73,7 +73,6 @@ const EmailSignUpScreen = ({route}: {route: Route<any>}) => {
                   value: true,
                 },
               }}
-              name="name"
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
                   label="Your Name"
@@ -88,6 +87,7 @@ const EmailSignUpScreen = ({route}: {route: Route<any>}) => {
             />
             <ErrorMessage message={errors.name?.message} />
             <Controller
+              name="email"
               control={control}
               rules={{
                 required: {
@@ -95,7 +95,6 @@ const EmailSignUpScreen = ({route}: {route: Route<any>}) => {
                   value: true,
                 },
               }}
-              name="email"
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
                   keyboardType="email-address"
@@ -111,6 +110,7 @@ const EmailSignUpScreen = ({route}: {route: Route<any>}) => {
             />
             <ErrorMessage message={errors.email?.message} />
             <Controller
+              name="password"
               control={control}
               rules={{
                 required: {
@@ -122,7 +122,6 @@ const EmailSignUpScreen = ({route}: {route: Route<any>}) => {
                   value: 6,
                 },
               }}
-              name="password"
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
                   label="Password (min 6 characters)"
